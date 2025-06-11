@@ -89,7 +89,20 @@ public class Practice {
    * @return a sorted list of all reachable vertex values
    */
   public static List<Integer> sortedReachable(Map<Integer, Set<Integer>> graph, int starting) {
-    return null;
+    Set<Integer> visited = new HashSet<>();
+    List<Integer> reachable = new ArrayList<>();
+    sortedReachable(visited, reachable, graph, starting);
+    Collections.sort(reachable);
+    return reachable;
+  }
+
+   public static void sortedReachable(Set<Integer> visited, List<Integer> reachable, Map<Integer, Set<Integer>> graph, int starting) {
+    if(graph.isEmpty() || !graph.containsKey(starting) || visited.contains(starting)) return;
+    visited.add(starting);
+    reachable.add(starting);
+    for(Integer neighbor : graph.get(starting)) {
+      sortedReachable(visited, reachable, graph, neighbor);
+    }
   }
 
   /**
