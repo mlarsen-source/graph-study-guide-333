@@ -120,6 +120,23 @@ public class Practice {
    * @return true if there is a two-way connection between v1 and v2, false otherwise
    */
   public static <T> boolean twoWay(Vertex<T> v1, Vertex<T> v2) {
+    if (v1 == null || v2 == null) return false;
+    if (v1 == v2) return true;
+    Set<Vertex<T>> visited1 = new HashSet<>();
+    Set<Vertex<T>> visited2 = new HashSet<>();
+    boolean test1 = twoWay(v1, v2, visited1);
+    boolean test2 = twoWay(v2, v1, visited2);
+    return test1 && test2;
+  }
+
+  private static <T> boolean twoWay(Vertex<T> start, Vertex<T>end, Set<Vertex<T>> visited) {
+    if (start == end) return true;
+    if (visited.contains(start)) return false;
+    visited.add(start);
+
+    for (Vertex<T> neighbor : start.neighbors) {
+        if (twoWay(neighbor, end, visited)) return true;
+    }
     return false;
   }
 
